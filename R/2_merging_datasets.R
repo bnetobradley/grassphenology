@@ -45,5 +45,6 @@ ggplot(flr_prop, aes(x = reorder(binomial, desc(binomial)) , y = value, alpha = 
 #dev.off()
 
 ## save cleaned version of merged data in data folder
+flr_dat <- flr_dat[flr_dat$binomial %in% flr_prop$binomial,]
 flr_dat <- mutate(flr_dat, binomial=paste(genus, species, sep = "_"))
-write.csv(flr_dat, file = "data/merged_herbarium_climate_na.csv") 
+write.csv(flr_dat, file = "data/merged_herbarium_climate_na.csv", row.names=FALSE) 
