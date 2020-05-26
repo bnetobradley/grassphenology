@@ -39,12 +39,12 @@ startpars <- priorSim(priorOU, td$phy, plot=TRUE)$pars[[1]]
 priorOU(startpars)
 set.seed(1)
 mcmcOU <- bayou.makeMCMC(td$phy, x, SE=se, prior=priorOU, new.dir=F, outname=paste("OUmodeli", climvar[i], sep=""), plot.freq=NULL) # Set up the MCMC
-# mcmcOU$run(1000000)
+mcmcOU$run(1000000)
 chainOU <- mcmcOU$load()
 chainOU <- set.burnin(chainOU, 0.3)
 save(chainOU, file=paste("data/bayouchaini", climvar[i], ".Rdata", sep=""))
 mcmcOU2 <- bayou.makeMCMC(td$phy, x, SE=se, prior=priorOU, new.dir=F, outname=paste("OUmodelii", climvar[i], sep=""), plot.freq=NULL) # Set up the MCMC
-# mcmcOU2$run(1000000)
+mcmcOU2$run(1000000)
 chainOU2 <- mcmcOU2$load()
 chainOU2 <- set.burnin(chainOU2, 0.3)
 save(chainOU2, file=paste("data/bayouchainii", climvar[i], ".Rdata", sep="")) }
@@ -71,30 +71,30 @@ summary(chainii_t2month)
 RlnL <- gelman.R("lnL", chain1=chaini_t2month, chain2=chainii_t2month, plot=TRUE, type="n", ylim=c(0.9, 10))
 Ralpha <- gelman.R("alpha", chain1=chaini_t2month, chain2=chainii_t2month, plot=TRUE, type="n", ylim=c(0.9, 10))
 Rsig2 <- gelman.R("sig2", chain1=chaini_t2month, chain2=chainii_t2month, plot=TRUE, type="n", ylim=c(0.9, 10))
-## chains converged
-chains_t2month <- combine.chains(chaini_t2month, chainii_t2month)
+
 # halflife
-log(2)/summary(chains_t2month$alpha)
+log(2)/summary(chaini_t2month$alpha)
+log(2)/summary(chainii_t2month$alpha)
 
 summary(chaini_tmonth)
 summary(chainii_tmonth)
 RlnL <- gelman.R("lnL", chain1=chaini_tmonth, chain2=chainii_tmonth, plot=TRUE, type="n", ylim=c(0.9, 10))
 Ralpha <- gelman.R("alpha", chain1=chaini_tmonth, chain2=chainii_tmonth, plot=TRUE, type="n", ylim=c(0.9, 10))
 Rsig2 <- gelman.R("sig2", chain1=chaini_tmonth, chain2=chainii_tmonth, plot=TRUE, type="n", ylim=c(0.9, 10))
-## chains converged
-chains_tmonth <- combine.chains(chaini_tmonth, chainii_tmonth)
+
 # halflife
-log(2)/summary(chains_tmonth$alpha)
+log(2)/summary(chaini_tmonth$alpha)
+log(2)/summary(chainii_tmonth$alpha)
 
 summary(chaini_ppt)
 summary(chainii_ppt)
 RlnL <- gelman.R("lnL", chain1=chaini_ppt, chain2=chainii_ppt, plot=TRUE, type="n", ylim=c(0.9, 10))
 Ralpha <- gelman.R("alpha", chain1=chaini_ppt, chain2=chainii_ppt, plot=TRUE, type="n", ylim=c(0.9, 10))
 Rsig2 <- gelman.R("sig2", chain1=chaini_ppt, chain2=chainii_ppt, plot=TRUE, type="n", ylim=c(0.9, 10))
-# chains converged
-chains_ppt <- combine.chains(chaini_ppt, chainii_ppt)
+
 # halflife
-log(2)/summary(chains_ppt$alpha)
+log(2)/summary(chaini_ppt$alpha)
+log(2)/summary(chainii_ppt$alpha)
 
 plotSimmap.mcmc(chaini_tmonth, burnin = 0.3, pp.cutoff = 0.3)
 plotSimmap.mcmc(chaini_t2month, burnin = 0.3, pp.cutoff = 0.3)
