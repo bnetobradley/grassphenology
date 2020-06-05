@@ -89,4 +89,4 @@ for (i in unique(new$binomial)) {
   lm_results <- rbind(lm_results, tmp_res)
 }
 ppt2month <- filter(lm_results, term == "speciesx$ppt_2month_prior")
-write.csv(tave2month, "data/slopes/ppt_2month_prior_slopes.csv",row.names=FALSE)
+write.csv(ppt2month, "data/slopes/ppt_2month_prior_slopes.csv",row.names=FALSE)
