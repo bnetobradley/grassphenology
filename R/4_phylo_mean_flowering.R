@@ -13,7 +13,19 @@ names(se) <- mean$binomial
 
 # estimate phylogenetic signal
 mean_psigk <- phylosig(td$phy, x = x, method="K", test=TRUE, nsim=1000, se = se, start=NULL,control=list())
-mean_psigl <- phylosig(td$phy, x = x, method="lambda", test=TRUE, nsim=1000, se = se, start=NULL,control=list())
+
+# estimate phylogenetic halflife 
+# Priors set as in: https://github.com/uyedaj/EQG2017/blob/master/R/bayouWorkshopNotebook.Rmd
+priorOU <- make.prior(td$phy,dists=list(dalpha="dhalfcauchy", dsig2="dhalfcauchy",dk="cdpois", dtheta="dnorm"),param=list(dalpha=list(scale=0.1), dsig2=list(scale=0.1),dk=list(lambda=10, kmax=50), dsb=list(bmax=1, prob=1),dtheta=list(mean=mean(x), sd=1.5*sd(x))))
+
+startpars <- priorSim(priorOU, td$phy, plot=TRUE)$pars[[1]]
+priorOU(startpars)
+set.seed(1)
+mcmcOU <- bayou.makeMCMC(td$phy, x, SE=se, prior=priorOU, new.dir=F, outname=paste("OUmodel", "meanf", sep=""), plot.freq=NULL) # Set up the MCMC
+mcmcOU$run(1000000)
+chainOU <- mcmcOU$load()
+chainOU <- set.burnin(chainOU, 0.3)
+save(chainOU, file=paste("data/bayouchaini", "meanflr", ".Rdata", sep=""))
 
 ## plot phylogeny depicting mean flowering date ####
   # colours genereated from scales::show_col(viridis(11, begin = 0.3, end = 0.9))
