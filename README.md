@@ -16,12 +16,15 @@
 <h2> CODE </h2>
 <h4> In the /R folder of this repository, there are multiple files involved in cleaning and manipulating the datasets used. Below is a roadmap. </h4>
 
-<h3>1. Cleaning: </h3>
-
-<h3>2. Merging datasets: </h3> 
+<h3>1. Merging datasets: </h3> 
 <h4>In this script we merge herbarium records with climate data derived from each record's latitute and longitude. We also clean up binomials, dates and remove species with insufficient flowering records (ie. fewer than 10.) </h4>
 
-<h3>3. Variable selection: </h3>
+<h3>2. Variable selection: </h3>
+<h4> In this script we estimate the sensitivity (ie. the slope of the regression between flowering date and the value of a climate variable) of each species to three climate variables: (our focal climate variable) average temperature 2 months prior to mean flowering, average temperature 1 month prior to mean flowering and precipitation 2 months prior to mean flowering. </h4>
 
-<h3>4. Phylogenetic analyses: </h3>
+<h3>3. Phylogenetic analyses: mean flowering date </h3>
+<h4> In this scipt we estimate the phylogenetic signal and phylogenetic halflife of species' mean flowering times. </h4>
+
+<h3>4. Phylogenetic analyses: flowering sensitivity </h3>
+<h4> In this scipt we estimate the phylogenetic signal and phylogenetic halflife of species' sensitivity to the climate variables mentioned above. In order to assess the role of sampling bias on phylogenetic signal of phenological sensitivity, we also run a second analysis for each climate variable, using only the subset of sensitivity estimates that are statistically significant. </h4>
 
